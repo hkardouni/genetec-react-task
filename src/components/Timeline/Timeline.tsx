@@ -42,7 +42,7 @@ export const Timeline = ({ events, onEdit }: Props) => {
 
             return (
               <div
-                id={event.id} // 👈 اضافه شد برای focus
+                id={event.id}
                 key={event.id}
                 tabIndex={0}
                 onFocus={() =>
