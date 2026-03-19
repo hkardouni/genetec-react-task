@@ -22,7 +22,7 @@ function App() {
     <>
       <div className="pageStyle">
         <div className="containerStyle">
-          <h1>React Task</h1>
+          <h1>React Technical Task</h1>
 
           <button
             onClick={() => {
@@ -36,7 +36,6 @@ function App() {
           {open && (
             <div className="overlayStyle" onClick={() => setOpen(false)}>
               <div className="modalStyle" onClick={(e) => e.stopPropagation()}>
-                <h2>New Event</h2>
 
                 <EventForm
                   initialData={selectedEvent}

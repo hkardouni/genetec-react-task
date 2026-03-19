@@ -23,6 +23,8 @@ export const Timeline = ({ events, onEdit }: Props) => {
     {} as Record<string, EventItem[]>,
   );
 
+  const flatEvents = Object.values(grouped).flat();
+
   return (
     <div className="container">
       <div aria-live="polite" style={{ position: "absolute", left: -9999 }}>
@@ -33,26 +35,41 @@ export const Timeline = ({ events, onEdit }: Props) => {
         <div key={day}>
           <h3>{day}</h3>
 
-          {events.map((event) => (
-            <div
-              key={event.id}
-              tabIndex={0}
-              onFocus={() => setAnnouncement(`Focused on ${event.title}`)}
-              onKeyDown={(e) => {
-                if (e.key === "ArrowDown") {
-                  (e.currentTarget.nextSibling as HTMLElement)?.focus();
-                }
+          {events.map((event) => {
+            const currentIndex = flatEvents.findIndex(
+              (e) => e.id === event.id
+            );
 
-                if (e.key === "ArrowUp") {
-                  (e.currentTarget.previousSibling as HTMLElement)?.focus();
+            return (
+              <div
+                id={event.id} // 👈 اضافه شد برای focus
+                key={event.id}
+                tabIndex={0}
+                onFocus={() =>
+                  setAnnouncement(`Focused on ${event.title}`)
                 }
-              }}
-              onDoubleClick={() => onEdit?.(event)}
-              className="event-item"
-            >
-              {event.title}
-            </div>
-          ))}
+                onKeyDown={(e) => {
+                  if (e.key === "ArrowDown") {
+                    const next = flatEvents[currentIndex + 1];
+                    if (next) {
+                      document.getElementById(next.id)?.focus();
+                    }
+                  }
+
+                  if (e.key === "ArrowUp") {
+                    const prev = flatEvents[currentIndex - 1];
+                    if (prev) {
+                      document.getElementById(prev.id)?.focus();
+                    }
+                  }
+                }}
+                onDoubleClick={() => onEdit?.(event)}
+                className="event-item"
+              >
+                {event.title}
+              </div>
+            );
+          })}
         </div>
       ))}
     </div>
