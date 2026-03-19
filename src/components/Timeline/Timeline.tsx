@@ -1,6 +1,7 @@
 import type { EventItem } from "../../types";
 import dayjs from "dayjs";
 import { useState } from "react";
+import "../../styles/Timeline.css";
 
 type Props = {
   events: EventItem[];
@@ -23,14 +24,14 @@ export const Timeline = ({ events, onEdit }: Props) => {
   );
 
   return (
-    <div style={{ marginTop: "30px" }}>
+    <div className="container">
       <div aria-live="polite" style={{ position: "absolute", left: -9999 }}>
         {announcement}
       </div>
 
       {Object.entries(grouped).map(([day, events]) => (
         <div key={day}>
-          <h3 style={{ marginTop: "20px", color: "#374151" }}>{day}</h3>
+          <h3>{day}</h3>
 
           {events.map((event) => (
             <div
@@ -47,14 +48,7 @@ export const Timeline = ({ events, onEdit }: Props) => {
                 }
               }}
               onDoubleClick={() => onEdit?.(event)}
-              style={{
-                padding: "10px",
-                border: "1px solid #e5e7eb",
-                borderRadius: "6px",
-                marginBottom: "6px",
-                background: "white",
-                cursor: "pointer",
-              }}
+              className="event-item"
             >
               {event.title}
             </div>

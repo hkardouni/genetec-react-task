@@ -1,0 +1,79 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.table-style {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.table-style th {
+  background: #f3f4f6;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.table-style td {
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.search-input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.nav-buttons {
+  padding: 6px 12px;
+  margin-top: 10px;
+  margin-left: 20px;
+  cursor: pointer;
+  background-color: #3b82f6;
+}
+
+.edit-button {
+  padding: 4px 8px;
+  margin-right: 6px;
+  cursor: pointer;
+  background-color: #1c3b6d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: small;
+}
+
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.pagination button {
+  padding: 6px 10px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.active-page {
+  background: #2563eb;
+  color: rgb(20, 41, 231);
+  border-color: #2563eb;
+}
+
+.dots {
+  padding: 6px 8px;
+}

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { EventItem } from "../../types";
+import "../../styles/DataGrid.css";
 
 type Column = {
   key: keyof EventItem;
@@ -50,52 +51,51 @@ export const DataGrid = ({ data, columns, onEdit }: Props) => {
     }
   };
 
-  const tableStyle = {
-    width: "100%",
-    borderCollapse: "collapse" as const,
-    marginTop: "20px",
+  const totalPages = Math.ceil(sortedData.length / pageSize);
+
+  const getPageNumbers = () => {
+    const pages: (number | string)[] = [];
+
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+
+      if (page > 3) pages.push("...");
+
+      const start = Math.max(2, page - 1);
+      const end = Math.min(totalPages - 1, page + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (page < totalPages - 2) pages.push("...");
+
+      pages.push(totalPages);
+    }
+
+    return pages;
   };
 
-  const thStyle = {
-    background: "#f3f4f6",
-    padding: "10px",
-    textAlign: "center" as const,
-    cursor: "pointer",
-  };
-
-  const tdStyle = {
-    padding: "10px",
-    borderTop: "1px solid #eee",
-  };
   return (
-    <div style={{ maxWidth: 800, margin: "0 auto", padding: 20 }}>
+    <div className="container">
       <input
         placeholder="Search..."
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        style={{
-          padding: "8px",
-          width: "100%",
-          marginBottom: "10px",
-          border: "1px solid #ccc",
-          borderRadius: "6px",
-        }}
+        className="search-input"
       />
-      <table border={1} cellPadding={8} role="table" style={tableStyle}>
+      <table border={1} cellPadding={8} role="table" className="table-style">
         <thead>
           <tr>
             {columns.map((col) => (
-              <th
-                key={col.key}
-                onClick={() => handleSort(col.key)}
-                style={thStyle}
-                scope="col"
-              >
+              <th key={col.key} onClick={() => handleSort(col.key)} scope="col">
                 {col.label}
-                {sortKey === col.key && (sortOrder === "asc" ? " 🔼" : " 🔽")}
+                {sortKey === col.key && (sortOrder === "asc" ? " △" : " ▽")}
               </th>
             ))}
-            <th style={thStyle}>Actions</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -109,38 +109,65 @@ export const DataGrid = ({ data, columns, onEdit }: Props) => {
               onMouseLeave={(e) => (e.currentTarget.style.background = "white")}
             >
               {columns.map((col) => (
-                <td key={col.key} style={tdStyle}>
-                  {row[col.key]}
-                </td>
+                <td key={col.key}>{row[col.key]}</td>
               ))}
-              <td style={tdStyle}>
-                <button onClick={() => onEdit?.(row)}>Edit</button>
+              <td>
+                <button onClick={() => onEdit?.(row)} className="edit-button">
+                  Edit
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <button
-        onClick={() => setPage((p) => Math.max(p - 1, 1))}
-        style={{
-          padding: "6px 12px",
-          margin: 4,
-          cursor: "pointer",
-        }}
-      >
-        Prev
-      </button>
-      <button
-        onClick={() => setPage((p) => p + 1)}
-        style={{
-          padding: "6px 12px",
-          margin: 4,
-          cursor: "pointer",
-        }}
-      >
-        Next
-      </button>
+      <div className="pagination">
+        {/* First */}
+        <button onClick={() => setPage(1)} disabled={page === 1}>
+          {"<<"}
+        </button>
+
+        {/* Prev */}
+        <button
+          onClick={() => setPage((p) => Math.max(p - 1, 1))}
+          disabled={page === 1}
+        >
+          {"<"}
+        </button>
+
+        {/* Numbers */}
+        {getPageNumbers().map((p, index) =>
+          p === "..." ? (
+            <span key={`dots-${index}`} className="dots">
+              ...
+            </span>
+          ) : (
+            <button
+              key={`page-${p}-${index}`}
+              onClick={() => setPage(Number(p))}
+              className={page === p ? "active-page" : ""}
+            >
+              {p}
+            </button>
+          ),
+        )}
+
+        {/* Next */}
+        <button
+          onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+          disabled={page === totalPages}
+        >
+          {">"}
+        </button>
+
+        {/* Last */}
+        <button
+          onClick={() => setPage(totalPages)}
+          disabled={page === totalPages}
+        >
+          {">>"}
+        </button>
+      </div>
     </div>
   );
 };
