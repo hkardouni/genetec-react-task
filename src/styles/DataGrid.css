@@ -42,7 +42,7 @@
   padding: 4px 8px;
   margin-right: 6px;
   cursor: pointer;
-  background-color: #1c3b6d;
+  background-color: black;
   color: white;
   border: none;
   border-radius: 4px;
@@ -69,9 +69,8 @@
 }
 
 .active-page {
-  background: #2563eb;
   color: rgb(20, 41, 231);
-  border-color: #2563eb;
+  border: #200ec6 solid 1px;
 }
 
 .dots {

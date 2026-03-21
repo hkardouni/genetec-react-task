@@ -44,7 +44,7 @@ function App() {
                     setSelectedEvent(null);
                   }}
                 />
-                <button onClick={() => setOpen(false)} className="buttonStyle">
+                <button onClick={() => setOpen(false)} className="cancelButtonStyle">
                   Close
                 </button>
               </div>

@@ -5,3 +5,21 @@
   border: 1px solid #ccc;
   border-radius: 6px;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit-button {
+  padding: 10px;
+  background-color: #ebeff3;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  width: 100%;
+}

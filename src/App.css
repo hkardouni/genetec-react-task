@@ -49,6 +49,16 @@
   margin-bottom: 10px;
 }
 
+.cancelButtonStyle {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .cardStyle {
   background: white;
   padding: 20px;

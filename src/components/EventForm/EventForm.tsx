@@ -72,7 +72,7 @@ export const EventForm = ({ onSuccess, initialData }: Props) => {
       <input type="date" {...register("date")} className="input-style" />
       {errors.date && <p>{errors.date.message}</p>}
 
-      <button type="submit">Save</button>
+      <button type="submit" className="submit-button">Save</button>
     </form>
   );
 };
